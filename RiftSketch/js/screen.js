@@ -8,8 +8,10 @@ if (navigator.getUserMedia) {
  
 function handleVideo(stream) {
     video.src = window.URL.createObjectURL(stream);
+    console.log(video.src);
 }
  
 function videoError(e) {
+	console.log(e);
     // do something
 }
