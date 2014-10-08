@@ -29,6 +29,9 @@
     <div id="container">
       <canvas id="viewer"></canvas>
       <div id="camera" class="threed" ng-show="is_editor_visible">
+	<video autoplay="true" id="videoElement">
+     
+	    </video>
         <textarea class="threed mousetrap" ng-repeat="file in sketch.files" ng-model="file.contents" spellcheck="false"></textarea>
         <span class="threed alert alert-info">
           Alt + v - toggle VR | Alt + z - zero VR sensor<br />
