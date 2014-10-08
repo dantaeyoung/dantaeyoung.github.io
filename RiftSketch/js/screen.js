@@ -1,4 +1,4 @@
-function loadVideo() {
+  document.addEventListener("DOMContentLoaded", function(event) {
 
 	var video = document.querySelector("#videoElement");
 	 
@@ -18,4 +18,4 @@ function loadVideo() {
 	    // do something
 	} 
 
-}
+});
