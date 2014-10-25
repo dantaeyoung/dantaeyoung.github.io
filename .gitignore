@@ -1,2 +1,5 @@
 *.swp
 *.*~
+*.rhl
+*.bak
+*.3dmbak
