@@ -352,7 +352,7 @@ directionalLight.position.set( 1, 1, 0.5 ).normalize();
 
 	var texture = new THREE.Texture();
 	var loader = new THREE.ImageLoader( manager );
-	loader.load( 'grasshopper/texture2.jpg', function ( image ) {
+	loader.load( 'img/texture2.jpg', function ( image ) {
 
 		texture.image = image;
 		texture.needsUpdate = true;
@@ -369,7 +369,7 @@ var material = new THREE.MeshPhongMaterial({
 
 	var loader = new THREE.OBJLoader( manager );
 
-	loader.load( 'grasshopper/test.obj', function ( object ) {
+	loader.load( 'data/data.obj', function ( object ) {
 
 		console.log("object loaded");
 
