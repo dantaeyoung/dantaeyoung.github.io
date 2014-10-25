@@ -10,40 +10,6 @@ var File = (function () {
       var light = new t3.PointLight();\n\
       light.position.set(10, 15, 9);\n\
       scene.add(light);\n\
-      var makeCube = function (x, y, z) {\n\
-        var cube = new t3.Mesh(\n\
-          new t3.BoxGeometry(1, 1.1, 1),\n\
-          new t3.MeshLambertMaterial({color: \'red\'})\n\
-        );\n\
-        cube.scale.set(0.1, 0.1, 0.1);\n\
-        cube.position.set(1, 0, -1).add(\n\
-          new t3.Vector3(x, y, z));\n\
-        scene.add(cube);\n\
-        return cube;\n\
-      };\n\
-      \n\
-      var rows, cols, cubes = [], spacing = 0.07;\n\
-      rows = cols = 18;\n\
-      for (var r = 0; r < rows; r++) {\n\
-        for (var c = 0; c < cols; c++) {\n\
-          if (c === 0) { cubes[r] = []; }\n\
-          cubes[r][c] = makeCube(r * spacing, 0, c * spacing);\n\
-        }\n\
-      }\n\
-      var i = 0;\n\
-      return function () {\n\
-        i += -0.05;\n\
-        for (var r = 0; r < rows; r++) {\n\
-          for (var c = 0; c < cols; c++) {\n\
-            var height = (\n\
-              Math.sin(r / rows * Math.PI * 2 + i) + \n\
-              Math.cos(c / cols * Math.PI * 2 + i));\n\
-            cubes[r][c].position.setY(height / 12 + 0.6);\n\
-            cubes[r][c].material.color.setRGB(\n\
-              height + 1.0, height + 0.5, 0.5);\n\
-          }\n\
-        }\n\
-      };\
     '.replace(/\n {6}/g, '\n').replace(/^\s+|\s+$/g, ''));
     this.contents = contents === undefined ? defaultContents : contents;
     this.selected = true;
@@ -223,6 +189,11 @@ angular.module('index', [])
         spinNumberAndKeepSelection(1, 0.1);
         return false;
       });
+      Mousetrap.bind('alt+r', function () {
+	this.riftSandbox.clearScene();
+	loadObj(this.riftSandbox.scene);
+      }.bind(this));
+
 
       var MOVEMENT_RATE = 0.01;
       var ROTATION_RATE = 0.01;
@@ -296,6 +267,14 @@ angular.module('index', [])
     document.addEventListener('mozfullscreenchange', toggleVrMode, false);
     document.addEventListener('webkitfullscreenchange', toggleVrMode, false);
 
+
+
+
+
+
+
+
+
     this.riftSandbox.resize();
     // We only support a specific WebVR build at the moment.
     if (!navigator.userAgent.match('Firefox/34')) {
@@ -308,15 +287,25 @@ angular.module('index', [])
     this.deviceManager.init();
     this.mainLoop();
 
+
+	loadObj(this.riftSandbox.scene);
+   //loadObj(this.riftSandbox.scene);
+
+
+/*
     $scope.$watch('sketch.getCode()', function (code) {
       this.riftSandbox.clearScene();
       var _sketchLoop;
       $scope.error = null;
       try {
-        /* jshint -W054 */
-        var _sketchFunc = new Function('scene', '"use strict";\n' + code);
-        /* jshint +W054 */
-        _sketchLoop = _sketchFunc(this.riftSandbox.scene);
+
+
+       // var _sketchFunc = new Function('scene', '"use strict";\n' + code);
+
+      //  _sketchLoop = _sketchFunc(this.riftSandbox.scene);
+        _sketchLoop = loadObj(this.riftSandbox.scene);
+
+console.log(_sketchLoop);
       }
       catch (err) {
         $scope.error = err.toString();
@@ -325,6 +314,80 @@ angular.module('index', [])
         this.sketchLoop = _sketchLoop;
       }
       localStorage.setItem('autosave', code);
-    }.bind(this));
+    }.bind(this)); 
+
+*/
   }]);
+
+
+
+var  loadObj = function(scene) {
+
+	var light = new THREE.AmbientLight( 0x404040 ); // soft white light scene.add( light );
+      scene.add(light);
+      var light = new THREE.PointLight();
+      light.position.set(10, 15, 9);
+      scene.add(light);
+
+	var manager = new THREE.LoadingManager();
+	manager.onProgress = function ( item, loaded, total ) {
+
+		console.log( item, loaded, total );
+
+	};
+
+	var texture = new THREE.Texture();
+
+	var onProgress = function ( xhr ) {
+		if ( xhr.lengthComputable ) {
+			var percentComplete = xhr.loaded / xhr.total * 100;
+			console.log( Math.round(percentComplete, 2) + '% downloaded' );
+		}
+	};
+
+	var onError = function ( xhr ) {
+	};
+
+	var loader = new THREE.ImageLoader( manager );
+	loader.load( 'grasshopper/texture.jpg', function ( image ) {
+
+		texture.image = image;
+		texture.needsUpdate = true;
+
+	} );
+
+	console.log("object trigg");
+
+	var loader = new THREE.OBJLoader( manager );
+
+	loader.load( 'grasshopper/test.obj', function ( object ) {
+
+		console.log("object loaded");
+
+		object.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+//				child.material.map = texture;
+
+			}
+
+		} );
+
+		console.log(object);
+		object.position.y = 0;
+		scene.add( object );
+		console.log("adding obj");
+
+	}, onProgress, onError );
+
+  };
+
+
+
+
+
+
+
+
 }());

@@ -13,11 +13,16 @@
 
     <script src="lib/less/less-1.3.3.min.js"></script>
     <script src="lib/angular/angular.js"></script>
-    <script src="lib/ThreeJS/Three.js"></script>
+<!--    <script src="lib/ThreeJS/Three.js"></script> -->
     <script src="lib/mousetrap.js"> </script>
 
     <script src="lib/jquery/jquery-2.1.1.min.js"></script>
+    <script src="lib/ThreeJS/three.min.js"></script>
     <script src="lib/threex/threex.webcamtexture.js"></script>
+    <script src="lib/ThreeJS/OBJLoader.js"></script>
+    <script src="lib/ThreeJS/DDSLoader.js"></script>
+    <script src="lib/ThreeJS/MTLLoader.js"></script>
+    <script src="lib/ThreeJS/OBJMTLLoader.js"></script>
 
     <script src="js/DeviceManager.js"></script>
     <script src="js/RiftSandbox.js"></script>
@@ -37,7 +42,8 @@
         <span class="threed alert alert-info">
           Alt + v - toggle VR | Alt + z - zero VR sensor<br />
           Alt + e - toggle editor |
-          Alt + j/k, u/i, m/n - decrement or increment numbers
+          Alt + j/k, u/i, m/n - decrement or increment numbers | 
+	  Alt + r - refresh OBJ
         </span>
         <span class="threed alert alert-warning" ng-show="error">{{error}}</span>
 	<div class="threed screen editor">
