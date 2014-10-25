@@ -323,11 +323,14 @@ console.log(_sketchLoop);
 
 var  loadObj = function(scene) {
 
-	var light = new THREE.AmbientLight( 0x404040 ); // soft white light scene.add( light );
-      scene.add(light);
-      var light = new THREE.PointLight();
-      light.position.set(10, 15, 9);
-      scene.add(light);
+var ambientLight = new THREE.AmbientLight( 0xaaaaaa );
+scene.add( ambientLight );
+
+var directionalLight = new THREE.DirectionalLight( 0xdddddd, 2 );
+directionalLight.position.set( 1, 1, 0.5 ).normalize();
+//scene.add( directionalLight );
+
+
 
 	var manager = new THREE.LoadingManager();
 	manager.onProgress = function ( item, loaded, total ) {
@@ -336,7 +339,6 @@ var  loadObj = function(scene) {
 
 	};
 
-	var texture = new THREE.Texture();
 
 	var onProgress = function ( xhr ) {
 		if ( xhr.lengthComputable ) {
@@ -348,15 +350,22 @@ var  loadObj = function(scene) {
 	var onError = function ( xhr ) {
 	};
 
+	var texture = new THREE.Texture();
 	var loader = new THREE.ImageLoader( manager );
-	loader.load( 'grasshopper/texture.jpg', function ( image ) {
+	loader.load( 'grasshopper/texture2.jpg', function ( image ) {
 
 		texture.image = image;
 		texture.needsUpdate = true;
 
 	} );
+console.log(texture);
 
 	console.log("object trigg");
+
+var material = new THREE.MeshPhongMaterial({
+  color: 0x00ddff, 
+});
+
 
 	var loader = new THREE.OBJLoader( manager );
 
@@ -368,16 +377,14 @@ var  loadObj = function(scene) {
 
 			if ( child instanceof THREE.Mesh ) {
 
-//				child.material.map = texture;
+//				child.material = material;
+				child.material.map = texture;
 
 			}
 
 		} );
-
-		console.log(object);
 		object.position.y = 0;
 		scene.add( object );
-		console.log("adding obj");
 
 	}, onProgress, onError );
 
