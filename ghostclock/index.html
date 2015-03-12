@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+	<link href="css/d3clock.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="css/style.css" rel="stylesheet">
+
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- d3 js -->
+    <script src="lib/d3.v3.min.js"></script>
+
+    <!-- jquery -->
+    <script src="lib/jquery-1.11.2.min.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+	<script src="js/app.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/d3clock.js"></script>
+  </head>
+  <body ng-app="Watch">
+
+    <ion-pane>
+      <!--<ion-header-bar class="bar-stable">
+        <h1 class="title">undecimalclock</h1>
+		</ion-header-bar> -->
+	<ion-content scroll="false">
+		<div class="flex-container">
+			<div class="d3clock-wrapper" create-clock>
+			</div>
+			<div class="info">
+				<div class="current-time">CURRENT TIME</div>
+				<div class="destination-name"></div>
+			</div>
+			<div class="address-form">
+				<form action="?" method="GET">
+				<h3>Ghostclock:</h3>
+				<input class="textinput" type="text" name="destination" placeholder="Full address of your home" >
+				<input class="submit" type="submit" value="Submit">
+				</form>
+			</div>
+		</div>
+	</ion-content>
+    </ion-pane>
+  </body>
+</html>
